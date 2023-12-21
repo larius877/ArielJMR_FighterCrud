@@ -1,0 +1,158 @@
+<p-toolbar styleClass="mb-4 gap-2">
+  <ng-template pTemplate="left">
+    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="showDialog()"></button>
+  </ng-template>
+</p-toolbar>
+
+<div class="card">
+  <p-table [value]="fighters" dataKey="id" editMode="row" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Fights Won</th>
+        <th>Age</th>
+        <th>Nationality</th>
+        <th>Kilograms</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template [formGroup]="form" pTemplate="body" let-fighter let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="fighter">
+        <td>{{ fighter.id }}</td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" formControlName="name" [value]="form.get('Name')?.value">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{fighter.name}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" formControlName="address" [value]="form.get('Address')?.value">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{fighter.address}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="number" formControlName="fightsWon" [value]="form.get('FightsWon')?.value">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{fighter.fightsWon}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="number" formControlName="age" [value]="form.get('Age')?.value">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{fighter.age}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" formControlName="nationality" [value]="form.get('Nationality')?.value">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{fighter.nationality}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="number" formControlName="kilograms" [value]="form.get('Kilograms')?.value">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{fighter.kilograms}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+              (click)="onRowEditInit(fighter)" class="p-button-rounded p-button-text"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+              (click)="onRowEditSave()" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+              (click)="onRowEditCancel()" class="p-button-rounded p-button-text p-button-danger"></button>
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+              (click)="onRowDelete(fighter)" class="p-button-rounded p-button-text p-button-danger"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="isVisibleAddFighterDialog" [style]="{ width: '450px' }" header="New Fighter" [modal]="true"
+  styleClass="p-fluid">
+  <ng-template [formGroup]="form" pTemplate="content">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" formControlName="name" required autofocus />
+      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+    </div>
+    <div class="field">
+      <label for="address">
+        Address
+      </label>
+      <input type="text" pInputText id="address" formControlName="address" required autofocus />
+      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+    </div>
+    <div class="field">
+      <label for="fightsWon">
+        Fights Won
+      </label>
+      <input type="text" pInputText id="fightsWon" formControlName="fightsWon" required autofocus />
+      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+    </div>
+
+    <div class="field">
+      <label for="Age">
+        Age
+      </label>
+      <input type="text" pInputText id="Age" formControlName="age" required autofocus />
+      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+    </div>
+
+    <div class="field">
+      <label for="nationality">
+        Nationality
+      </label>
+      <input type="text" pInputText id="nationality" formControlName="nationality" required autofocus />
+      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+    </div>
+
+    <div class="field">
+      <label for="kilograms">
+        Kilograms
+      </label>
+      <input type="text" pInputText id="kilograms" formControlName="kilograms" required autofocus />
+      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="onAddFighter()"></button>
+  </ng-template>
+</p-dialog>
